@@ -6,9 +6,20 @@ pragma solidity 0.4.25;
 
 contract ethscaler {
     
-    event batchreceived();
+    
+    uint32 public identifier;
+    
+    event newBatch();
+    event Register(address indexed userAddress, uint256 indexed identifier, uint value);
+    
+    function register() public payable{
+        require(msg.value > 0.1 ether);
+        require(identifier < 2**32); 
+        identifier ++;
+        emit Register(msg.sender, identifier, msg.value);
+    }
     
     function () public payable {
-        emit batchreceived();
+        emit newBatch();
     }
 }
